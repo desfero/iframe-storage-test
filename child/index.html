@@ -1,17 +1,20 @@
 <html>
 <body>
+<!--<div>-->
+<!--    <span>Cookie enabled:</span>-->
+<!--    <span id="cookie-status">False</span>-->
+<!--</div>-->
 <div>
-    <span>Cookie enabled:</span>
-    <span id="cookie-status">False</span>
-</div>
-<div>
-    <span>Storage Access status:</span>
-    <span id="request-status">Not initiated</span>
+    <span>Latest storage value:</span>
+    <span id="storage-value">none</span>
 </div>
 <button id="allow-cookies" style="display: none">Allow cookies</button>
 <script type="text/javascript">
     try {
         console.log(localStorage.getItem('test', +(new Date())));
+
+        document.querySelector('#storage-value').innerHTML = status;
+
         localStorage.setItem('test', +(new Date()));
     } catch (e) {
         console.log('localStorage not available', e);

@@ -11,9 +11,10 @@
 <button id="allow-cookies" style="display: none">Allow cookies</button>
 <script type="text/javascript">
     try {
-        console.log(localStorage.getItem('test', +(new Date())));
+        let item = localStorage.getItem('test', +(new Date()));
+        console.log(item);
 
-        document.querySelector('#storage-value').innerHTML = status;
+        document.querySelector('#storage-value').innerHTML = item;
 
         localStorage.setItem('test', +(new Date()));
     } catch (e) {

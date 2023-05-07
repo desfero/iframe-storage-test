@@ -1,20 +1,23 @@
 <html>
 <body>
 <div>
-    <span>Latest storage value:</span>
-    <span id="storage-value">none</span>
+    <span>Last storage value:</span>
+    <span id="last-storage-value">none</span>
+    <span>New storage value:</span>
+    <span id="new-storage-value">none</span>
 </div>
 <script type="text/javascript">
     try {
         let item = localStorage.getItem('test');
 
-        console.log("Previous", item);
-        document.querySelector('#storage-value').innerHTML = item;
+        console.log("Last", item);
+        document.querySelector('#last-storage-value').innerHTML = item;
 
         let newItem = +(new Date());
+        localStorage.setItem('test', newItem);
 
         console.log("New", newItem);
-        localStorage.setItem('test', newItem);
+        document.querySelector('#new-storage-value').innerHTML = newItem;
     } catch (e) {
         console.log('localStorage not available', e);
     }

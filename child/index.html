@@ -8,13 +8,13 @@
 </div>
 <script type="text/javascript">
     try {
-        let item = localStorage.getItem('test');
+        let item = sessionStorage.getItem('test');
 
         console.log("Last", item);
         document.querySelector('#last-storage-value').innerHTML = item;
 
         let newItem = +(new Date());
-        localStorage.setItem('test', newItem);
+        sessionStorage.setItem('test', newItem);
 
         console.log("New", newItem);
         document.querySelector('#new-storage-value').innerHTML = newItem;

@@ -10,6 +10,12 @@
 </div>
 <button id="allow-cookies" style="display: none">Allow cookies</button>
 <script type="text/javascript">
+    try {
+        localStorage.setItem('test', +(new Date()));
+    } catch (e) {
+        console.log('localStorage not available', e);
+    }
+
     window.localStorage.test = +(new Date());
 
     let prevCookieEnabledInNavigator = null;

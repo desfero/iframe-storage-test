@@ -1,0 +1,15 @@
+<html>
+<body>
+<div>
+    Iframe:
+</div>
+<iframe
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin"
+        src="http://100.26.57.112:8080/iframe.html"
+></iframe>
+<script type="text/javascript">
+    // Root cookies test
+    document.cookie = `rootcookie=${+(new Date())}`;
+</script>
+</body>
+</html>

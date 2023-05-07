@@ -1,0 +1,120 @@
+<html>
+<body>
+<div>
+    <span>Cookie enabled:</span>
+    <span id="cookie-status">False</span>
+</div>
+<div>
+    <span>Storage Access status:</span>
+    <span id="request-status">Not initiated</span>
+</div>
+<button id="allow-cookies" style="display: none">Allow cookies</button>
+<script type="text/javascript">
+    window.localStorage.test = +(new Date());
+
+    let prevCookieEnabledInNavigator = null;
+    let prevCookieEnabledByTest = null;
+
+    function isCookieEnabled() {
+        let cookieEnabled = false;
+        try {
+            // Browser response
+            let cookieEnabledInNav = navigator.cookieEnabled;
+
+            // Logging
+            if (cookieEnabledInNav !== prevCookieEnabledInNavigator) {
+                prevCookieEnabledInNavigator = cookieEnabledInNav;
+                console.log('navigator.cookieEnabled', cookieEnabledInNav);
+            }
+
+            // Actual result
+            let cookieEnabledByTest;
+
+            const sampleCookie = 'cookietest=1';
+            document.cookie = sampleCookie;
+            cookieEnabledByTest = document.cookie.includes(sampleCookie);
+            document.cookie = `${sampleCookie}; expires=Thu, 01-Jan-1970 00:00:01 GMT`;
+
+            // Logging
+            if (cookieEnabledByTest !== prevCookieEnabledByTest) {
+                prevCookieEnabledByTest = cookieEnabledByTest;
+                console.log('cookieEnabledByTest', cookieEnabledByTest);
+            }
+
+            cookieEnabled = cookieEnabledByTest;
+        } catch (e) {
+            cookieEnabled = false;
+        }
+
+        // Set test cookie
+        if (cookieEnabled) {
+            document.cookie = `debug-storage-access-api=${+(new Date())}`;
+        }
+
+        return cookieEnabled;
+    }
+
+    function displayCookieStatusEnabled() {
+        document.querySelector('#cookie-status').innerHTML = 'True';
+    }
+
+    function displayRequestStatus(status) {
+        document.querySelector('#request-status').innerHTML = status;
+    }
+
+    function toggleRequestButtonDisplay(state) {
+        document.querySelector('#allow-cookies').style.display = state ? 'block' : 'none';
+    }
+
+    function pollCookieStatus() {
+        setTimeout(
+            () => {
+                if (isCookieEnabled()) {
+                    displayCookieStatusEnabled();
+                } else {
+                    pollCookieStatus();
+                }
+            },
+            1000
+        );
+    }
+
+    function initiateStorageAccessApiRequest() {
+        displayRequestStatus('Initiated request');
+        document.requestStorageAccess().then(
+            () => {
+                displayRequestStatus('Accepted');
+                window.localStorage.test = +(new Date());
+                toggleRequestButtonDisplay(false);
+                pollCookieStatus();
+            },
+            (...args) => {
+                displayRequestStatus('Rejected');
+            }
+        );
+    }
+
+    document.querySelector('#allow-cookies').addEventListener('click', initiateStorageAccessApiRequest);
+
+    if (isCookieEnabled()) {
+        document.querySelector('#cookie-status').innerHTML = 'True';
+    } else {
+        if (document.requestStorageAccess) {
+            document.hasStorageAccess().then(
+                hasAccess => {
+                    console.log('hasStorageAccess', hasAccess);
+                    !hasAccess && toggleRequestButtonDisplay(true);
+                },
+                reason => {
+                    console.log('hasStorageAccess', reason);
+                    toggleRequestButtonDisplay(true);
+                }
+            );
+        } else {
+            displayRequestStatus('Not available');
+            pollCookieStatus();
+        }
+    }
+</script>
+</body>
+</html>

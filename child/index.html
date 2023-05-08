@@ -24,6 +24,8 @@
         console.log('localStorage not available', e);
     }
 
+    fetch("https://iframe-storage-test-server.vercel.app/");
+
     document.querySelector('#request-access').addEventListener('click', () => {
         document.requestStorageAccess().then(
             () => {

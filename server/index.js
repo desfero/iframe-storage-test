@@ -5,6 +5,11 @@ let options = { httpOnly: true, secure: true };
 
 app.get("/", (req, res) => {
     res.send("Express on Vercel");
+
+    res.sendFile(__dirname + '/index.html');
+});
+app.get("/get", (req, res) => {
+    res.send("Express on Vercel");
 });
 app.get("/set", (req, res) => {
     res.cookie("test", +(new Date()), options);

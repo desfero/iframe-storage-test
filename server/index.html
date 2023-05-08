@@ -1,0 +1,41 @@
+<html>
+<body>
+<div>
+    <span>Last storage value:</span>
+    <span id="last-storage-value">none</span>
+    <span>New storage value:</span>
+    <span id="new-storage-value">none</span>
+
+    <button id="request-access">Request access</button>
+</div>
+<script type="text/javascript">
+    try {
+        let item = localStorage.getItem('test');
+
+        console.log("Last", item);
+        document.querySelector('#last-storage-value').innerHTML = item;
+
+        let newItem = +(new Date());
+        localStorage.setItem('test', newItem);
+
+        console.log("New", newItem);
+        document.querySelector('#new-storage-value').innerHTML = newItem;
+    } catch (e) {
+        console.log('localStorage not available', e);
+    }
+
+    fetch("https://iframe-storage-test-server.vercel.app/get");
+
+    document.querySelector('#request-access').addEventListener('click', () => {
+        document.requestStorageAccess().then(
+            () => {
+                console.log("access granted");
+            },
+            () => {
+                console.log("access denied");
+            }
+        );
+    });
+</script>
+</body>
+</html>

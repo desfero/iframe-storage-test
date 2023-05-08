@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 const app = express();
 app.use(cookieParser());
 
-let options = { httpOnly: true, secure: true, sameSite: "None" };
+let options = { httpOnly: true, secure: true, sameSite: "None", expires: new Date(Date.now() + 900000) };
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + '/index.html');

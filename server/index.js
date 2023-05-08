@@ -10,9 +10,11 @@ app.get("/get", (req, res) => {
     res.send("Express on Vercel");
 });
 app.get("/set", (req, res) => {
+    const log = req.cookies;
+
     res.cookie("test", +(new Date()), options);
 
-    res.send("Set");
+    res.send(log);
 });
 app.get("/clear", (req, res) => {
     res.clearCookie("test", options);

@@ -7,7 +7,7 @@ app.get("/", (req, res) => {
     res.send("Express on Vercel");
 });
 app.get("/set", (req, res) => {
-    res.cookie("test", +(new Date()).toString(), options);
+    res.cookie("test", +(new Date()), options);
 
     res.send("Set");
 });

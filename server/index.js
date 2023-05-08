@@ -15,9 +15,10 @@ app.get("/get", (req, res) => {
 app.get("/set", (req, res) => {
     const log = req.cookies;
 
-    res.cookie("test", +(new Date()), options);
+    let next = +(new Date());
+    res.cookie("test", next, options);
 
-    res.send(JSON.stringify(log));
+    res.send(JSON.stringify(log) + "next: " + next);
 });
 app.get("/clear", (req, res) => {
     res.clearCookie("test", options);

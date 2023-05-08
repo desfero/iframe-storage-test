@@ -5,6 +5,8 @@
     <span id="last-storage-value">none</span>
     <span>New storage value:</span>
     <span id="new-storage-value">none</span>
+
+    <button id="request-access">Request access</button>
 </div>
 <script type="text/javascript">
     try {
@@ -21,6 +23,17 @@
     } catch (e) {
         console.log('localStorage not available', e);
     }
+
+    document.querySelector('#request-access').addEventListener('click', () => {
+        document.requestStorageAccess().then(
+            () => {
+                console.log("access granted");
+            },
+            () => {
+                console.log("access denied");
+            }
+        );
+    });
 </script>
 </body>
 </html>

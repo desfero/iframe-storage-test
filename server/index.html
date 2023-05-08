@@ -1,12 +1,14 @@
 <html>
 <body>
 <div>
-    <span>Last storage value:</span>
+    <span>previous localStorage value:</span>
     <span id="last-storage-value">none</span>
-    <span>New storage value:</span>
+    <span>New localStorage value:</span>
     <span id="new-storage-value">none</span>
 
-    <button id="request-access">Request access</button>
+    <button id="request-access">Request storage access (Storage Access API)</button>
+
+    <button id="set-cookies">Set cookies</button>
 </div>
 <script type="text/javascript">
     try {
@@ -23,7 +25,7 @@
     } catch (e) {
         console.log('localStorage not available', e);
     }
-    fetch("https://iframe-storage-test-server.vercel.app/set").then(res => res.text()).then((res) => {
+    fetch("https://iframe-storage-test-server.vercel.app/get").then(res => res.text()).then((res) => {
         console.log("Result", res);
     });
 
@@ -36,6 +38,12 @@
                 console.log("access denied");
             }
         );
+    });
+
+    document.querySelector('#set-cookies').addEventListener('click', () => {
+        fetch("https://iframe-storage-test-server.vercel.app/set").then(res => res.text()).then((res) => {
+            console.log("Set Result", res);
+        });
     });
 </script>
 </body>

@@ -10,7 +10,9 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 app.get("/get", (req, res) => {
-    res.send("Express on Vercel");
+    const log = req.cookies;
+
+    res.send("Cookies: " + JSON.stringify(log));
 });
 app.get("/set", (req, res) => {
     const log = req.cookies;
@@ -18,7 +20,7 @@ app.get("/set", (req, res) => {
     let next = +(new Date());
     res.cookie("test", next, options);
 
-    res.send(JSON.stringify(log) + "next: " + next);
+    res.send("Current cookies: " + JSON.stringify(log) + "Next cookies: " + JSON.stringify({ test: next }));
 });
 app.get("/clear", (req, res) => {
     res.clearCookie("test", options);

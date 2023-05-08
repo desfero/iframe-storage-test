@@ -4,8 +4,6 @@ const app = express();
 let options = { httpOnly: true, secure: true };
 
 app.get("/", (req, res) => {
-    res.send("Express on Vercel");
-
     res.sendFile(__dirname + '/index.html');
 });
 app.get("/get", (req, res) => {

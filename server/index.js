@@ -1,5 +1,8 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
+
 const app = express();
+app.use(cookieParser());
 
 let options = { httpOnly: true, secure: true };
 
@@ -14,7 +17,7 @@ app.get("/set", (req, res) => {
 
     res.cookie("test", +(new Date()), options);
 
-    res.send(log);
+    res.send(JSON.stringify(log));
 });
 app.get("/clear", (req, res) => {
     res.clearCookie("test", options);

@@ -9,6 +9,8 @@
     <button id="request-access">Request storage access (Storage Access API)</button>
 
     <button id="set-cookies">Set cookies</button>
+
+    <button id="post-message">Post message</button>
 </div>
 <script type="text/javascript">
     try {
@@ -44,6 +46,14 @@
         fetch("https://iframe-storage-test-server.vercel.app/set").then(res => res.text()).then((res) => {
             console.log("Set Result", res);
         });
+    });
+
+    const bc = new BroadcastChannel("test_channel");
+    bc.onmessage = (ev) => {
+        console.log("BroadcastChannel", ev);
+    };
+    document.querySelector('#post-message').addEventListener('click', () => {
+        bc.postMessage("This is a test message.");
     });
 </script>
 </body>

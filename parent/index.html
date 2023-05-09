@@ -4,7 +4,15 @@
     Iframe:
 </div>
 <iframe src="https://iframe-storage-test-server.vercel.app/"></iframe>
+
+<button id="login">
+    Login
+</button>
+
 <script type="text/javascript">
+    document.querySelector('#login').addEventListener('click', () => {
+        window.open("https://iframe-storage-test-server.vercel.app");
+    });
 </script>
 </body>
 </html>
